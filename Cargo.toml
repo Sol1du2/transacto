@@ -6,4 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.95"
+thiserror = "2.0.11"
+rust_decimal = "1.36.0"
+rust_decimal_macros = "1.36.0"
+csv = "1.3.1"
+serde = { version = "1.0.217", features = ["derive"] }
+enum_dispatch = "0.3.13"
 
+[dev-dependencies]
+pretty_assertions = "1.4.1"
