@@ -1,0 +1,11 @@
+# General ignores (exceptions below)
+.*
+
+# We don't want to ignore the following even if they are dot-files
+!.editorconfig
+!.gitattributes
+!.gitignore
+!.rustfmt.toml
+
+# Build
+/target
