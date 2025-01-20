@@ -1,6 +1,7 @@
 use std::fs::File;
 
 use anyhow::Result;
+use log::debug;
 use rust_decimal::Decimal;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
@@ -95,15 +96,17 @@ pub fn process_csv(file_path: &str, ledger: &mut Ledger) -> Result<()> {
     let file = File::open(file_path)?;
     let mut csv_reader = csv::ReaderBuilder::new().trim(csv::Trim::All).from_reader(file);
 
-    for record in csv_reader.deserialize() {
-        let transaction: TransactionRecord = record?;
-        match transaction.try_into() {
-            Ok(transaction) => {
-                if let Err(err) = ledger.execute_transaction(transaction) {
-                    eprintln!("failed to execute transaction, err={:?}", err);
-                }
+    for record in csv_reader.deserialize::<TransactionRecord>() {
+        match record {
+            Ok(transaction) => match transaction.try_into() {
+                Ok(transaction) => {
+                    if let Err(err) = ledger.execute_transaction(transaction) {
+                        debug!("failed to execute transaction, err={}", err);
+                    }
+                },
+                Err(err) => debug!("invalid transaction, err={}", err),
             },
-            Err(err) => eprintln!("invalid transaction, err={:?}", err),
+            Err(err) => debug!("failed to deserialize record, err={}", err),
         }
     }
 
