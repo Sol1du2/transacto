@@ -6,6 +6,10 @@ use rust_decimal_macros::dec;
 use super::{client, ExecutableTransaction, TransactionError};
 use super::{client::Client, ledger::Ledger};
 
+#[cfg(test)]
+#[path = "transaction_tests.rs"]
+mod transaction_tests;
+
 #[enum_dispatch(ExecutableTransaction)]
 pub enum Transaction {
     Deposit,
