@@ -19,6 +19,8 @@ impl Ledger {
         }
     }
 
+    /// Transactions that have their own global unique id will be stored.
+    /// If the id already exists then the transaction is discarded.
     pub fn execute_transaction(&mut self, transaction: Transaction) -> Result<(), TransactionError> {
         if let Some(id) = transaction.id() {
             if self.transactions.contains_key(&id) {
@@ -29,7 +31,7 @@ impl Ledger {
 
         transaction.execute(self)?;
 
-        // Transactions that contain their own id could potentially be reversed
+        // Transactions that contain their own id could potentially be reversed,
         // so we should store them.
         if let Some(id) = transaction.id() {
             self.transactions.insert(id, transaction);
