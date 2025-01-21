@@ -1,15 +1,21 @@
 use anyhow::Result;
+use getset::CopyGetters;
 use rust_decimal::Decimal;
 
 use super::TransactionError;
 
 const PRECISION: u32 = 4;
 
+#[derive(CopyGetters)]
 pub struct Client {
-    pub id: u16,
-    pub available: Decimal,
-    pub held: Decimal,
-    pub locked: bool,
+    #[get_copy = "pub"]
+    id: u16,
+    #[get_copy = "pub"]
+    available: Decimal,
+    #[get_copy = "pub"]
+    held: Decimal,
+    #[get_copy = "pub"]
+    locked: bool,
 }
 
 impl Client {

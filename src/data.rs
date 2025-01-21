@@ -56,11 +56,11 @@ pub struct ClientRecord {
 impl From<&Client> for ClientRecord {
     fn from(client: &Client) -> Self {
         ClientRecord {
-            id: client.id,
-            available: client.available,
-            held: client.held,
+            id: client.id(),
+            available: client.available(),
+            held: client.held(),
             total: client.get_total(),
-            locked: client.locked,
+            locked: client.locked(),
         }
     }
 }

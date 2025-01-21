@@ -5,10 +5,10 @@ use rust_decimal_macros::dec;
 use super::*;
 
 fn assert_client(client: &Client, id: u16, available: Decimal, held: Decimal, locked: bool) {
-    assert_eq!(client.id, id);
-    assert_eq!(client.available, available);
-    assert_eq!(client.held, held);
-    assert_eq!(client.locked, locked);
+    assert_eq!(client.id(), id);
+    assert_eq!(client.available(), available);
+    assert_eq!(client.held(), held);
+    assert_eq!(client.locked(), locked);
     assert_eq!(client.get_total(), available + held);
 }
 
